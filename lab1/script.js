@@ -78,12 +78,11 @@ function rgbToHsv(r, g, b) {
 function hsvToRgb(h, s, v) {
     let r, g, b;
 
-    // Convert saturation and value from percentages to decimals
     s /= 100;
     v /= 100;
 
     let c = v * s; // Chroma
-    let x = c * (1 - Math.abs((h / 60) % 2 - 1)); // Second largest component
+    let x = c * (1 - Math.abs((h / 60) % 2 - 1)); 
     let m = v - c; // Match value
 
     if (h >= 0 && h < 60) {
@@ -117,7 +116,6 @@ function hsvToRgb(h, s, v) {
         b = 0;
     }
 
-    // Convert back to RGB 0-255 range
     r = Math.round((r + m) * 255);
     g = Math.round((g + m) * 255);
     b = Math.round((b + m) * 255);
@@ -138,20 +136,17 @@ function updateColor() {
     color.value = hex;
     document.getElementById('rgb-box').style.backgroundColor = hex;
 
-    // Обновляем значения CMYK
     c.value = cValue;
     m.value = mValue;
     y.value = yValue;
     k.value = kValue;
     document.getElementById('cmyk-box').style.backgroundColor = rgbToHex(...cmykToRgb(cValue, mValue, yValue, kValue));
 
-    // Обновляем значения HSV
     h.value = hValue;
     s.value = sValue;
     v.value = vValue;
     document.getElementById('hsv-box').style.backgroundColor = rgbToHex(...hsvToRgb(hValue, sValue, vValue));
 
-    // Обновляем ползунки
     r_range.value = rValue;
     g_range.value = gValue;
     b_range.value = bValue;
@@ -193,7 +188,6 @@ function updateHSV() {
     updateColor();
 }
 
-// Обработчик для цветового выбора
 color.addEventListener('input', () => {
     const hex = color.value;
     const rgb = hexToRgb(hex);
@@ -203,7 +197,6 @@ color.addEventListener('input', () => {
     updateColor();
 });
 
-// Привязываем события для обновления цветов
 r.addEventListener('input', updateColor);
 g.addEventListener('input', updateColor);
 b.addEventListener('input', updateColor);
@@ -217,7 +210,6 @@ h.addEventListener('input', updateHSV);
 s.addEventListener('input', updateHSV);
 v.addEventListener('input', updateHSV);
 
-// Привязываем события для ползунков
 r_range.addEventListener('input', () => {
     r.value = r_range.value;
     updateColor();
@@ -249,5 +241,4 @@ v_range.addEventListener('input', () => {
     updateHSV();
 });
 
-// Первоначальная настройка
 updateColor();
